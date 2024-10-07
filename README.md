@@ -20,7 +20,7 @@ This repo contains automation tests for [Stripe API](https://docs.stripe.com/api
 - Create a stripe account to access the data.
 - Get the secret key from the dev options from Stripe Dev portals.
 - Place the secret key in `./src/test/resources.properties/config.properties` file.
-- To add a user/users add the name, email and description in `./src/test/resources/Excel/testData.xlsx` file. 
+- To create new user/users add the name, email and description in `./src/test/resources/Excel/testData.xlsx` file. 
 - To delete a user/users add the id's of the users in `./src/test/resources/Excel/testData.xlsx` file.
 
 ## **#Executing tests and Viewing reports**
