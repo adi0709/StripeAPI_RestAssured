@@ -1,5 +1,6 @@
 package apiTestingFramework.APIs;
 
+import apiTestingFramework.pojo.Customer;
 import apiTestingFramework.setup.BaseTest;
 import io.restassured.response.Response;
 
@@ -27,6 +28,20 @@ public class CreateCustomerApi extends BaseTest {
                 .formParam("name", data.get("name"))
                 .formParam("email", data.get("email"))
                 .formParam("description", data.get("description"))
+                .post(config.getProperty("customerApiEndpoint"));
+
+        return response;
+    }
+
+    public static Response createCustomerFromPojo(String username, String email, String description){
+        Customer customer = new Customer(username, email, description);
+
+        Response response= given()
+                .auth()
+                .basic(config.getProperty("secretKey"),"")
+                .formParam("name", customer.getName())
+                .formParam("email", customer.getEmail())
+                .formParam("description", customer.getDescription())
                 .post(config.getProperty("customerApiEndpoint"));
 
         return response;

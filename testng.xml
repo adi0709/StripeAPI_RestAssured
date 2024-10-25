@@ -4,7 +4,7 @@
     <listeners>
         <listener class-name="apiTestingFramework.listeners.ExtentListeners"></listener>
     </listeners>
-    <test verbose="2" preserve-order="true" name="/Users/juhisingh/eclipse-workspace/StripeApi">
+    <test verbose="2" preserve-order="true" name="/Users/juhisingh/eclipse-workspace/StripeAPI_RestAssured">
         <classes>
             <class name="apiTestingFramework.CreateCustomer">
                 <methods>
@@ -16,6 +16,11 @@
                 <methods>
                     <include name="deleteCreatedCustomer"/>
                     <include name="deleteCustomer"/>
+                </methods>
+            </class>
+            <class name="apiTestingFramework.UpdateCustomer">
+                <methods>
+                    <include name="updateCustomer"/>
                 </methods>
             </class>
             <class name="apiTestingFramework.listeners.ExtentListeners">

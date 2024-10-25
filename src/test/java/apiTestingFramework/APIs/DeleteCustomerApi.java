@@ -17,13 +17,8 @@ public class DeleteCustomerApi extends BaseTest {
 
         //Creating a customer to be deleted
         Response createCustomerResponse =
-                given()
-                        .auth()
-                        .basic(config.getProperty("secretKey"),"")
-                        .formParam("name", "Abcd")
-                        .formParam("email", "RandomEmail@gmail.com")
-                        .formParam("description", "Adding a random new customer")
-                        .post(config.getProperty("customerApiEndpoint"));
+                CreateCustomerApi.createCustomerFromPojo("Abcd", "RandomEmail@gmail.com", "Adding a random new customer");
+
         JSONObject jsonObject= new JSONObject(createCustomerResponse.asString());
         createdCustomerId = (jsonObject.get("id")).toString();
 
