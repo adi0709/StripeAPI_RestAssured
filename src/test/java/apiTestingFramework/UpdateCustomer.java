@@ -4,11 +4,12 @@ import apiTestingFramework.APIs.CreateCustomerApi;
 import apiTestingFramework.APIs.UpdateCustomerApi;
 import apiTestingFramework.pojo.Customer;
 import apiTestingFramework.setup.BaseTest;
-import static org.hamcrest.Matchers.*;
 import io.restassured.response.Response;
 import org.json.JSONObject;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
+
+import static org.hamcrest.Matchers.*;
 
 public class UpdateCustomer extends BaseTest {
     Customer createCustomerData = new Customer("Adi", "Adi@gmail.com", "New Description for a new user");

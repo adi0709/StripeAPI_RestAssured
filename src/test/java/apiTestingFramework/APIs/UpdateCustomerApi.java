@@ -2,7 +2,6 @@ package apiTestingFramework.APIs;
 
 import apiTestingFramework.setup.BaseTest;
 import io.restassured.response.Response;
-import org.json.JSONObject;
 
 import static io.restassured.RestAssured.given;
 
