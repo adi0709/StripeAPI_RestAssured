@@ -1,34 +1,36 @@
 package apiTestingFramework;
 
+import apiTestingFramework.APIs.CreateCustomerApi;
 import apiTestingFramework.APIs.UpdateCustomerApi;
 import apiTestingFramework.pojo.Customer;
 import apiTestingFramework.setup.BaseTest;
-import apiTestingFramework.utilities.TestUtil;
+import static org.hamcrest.Matchers.*;
 import io.restassured.response.Response;
 import org.json.JSONObject;
-import org.testng.Assert;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 public class UpdateCustomer extends BaseTest {
-    Customer updateCustomerData = new Customer("Updated Name", "updatedName@gmail.com","Updated Description");
+    Customer createCustomerData = new Customer("Adi", "Adi@gmail.com", "New Description for a new user");
+    Customer updateCustomerData = new Customer("Updated Name", "updatedName@gmail.com", "Updated Description");
+    static String createdCustomerId;
+
+    @BeforeTest
+    void createCustomer() {
+        Response createCustomerResponse = CreateCustomerApi.createCustomerFromPojo(createCustomerData.getName(), createCustomerData.getEmail(), createCustomerData.getDescription());
+        JSONObject jsonObject = new JSONObject(createCustomerResponse.asString());
+        createdCustomerId = (jsonObject.get("id")).toString();
+    }
 
     @Test
-    public void updateCustomer(){
+    public void updateCustomer() {
 
-        Response response = UpdateCustomerApi.UpdateCustomer(updateCustomerData.getName(), updateCustomerData.getEmail(), updateCustomerData.getDescription(), 14);
-        response.prettyPrint();
-        Assert.assertEquals(response.statusCode(),200);
-
-        JSONObject jsonObject = new JSONObject(response.asString());
-
-        Assert.assertTrue(TestUtil.jsonHasKey(response.asString(), "id"));
-        Assert.assertTrue(TestUtil.jsonHasKey(response.asString(), "name"));
-        Assert.assertTrue(TestUtil.jsonHasKey(response.asString(), "email"));
-        Assert.assertTrue(TestUtil.jsonHasKey(response.asString(), "description"));
-
-        Assert.assertEquals(jsonObject.get("name"), updateCustomerData.getName(), "The name of the user got updated to the new name");
-        Assert.assertEquals(jsonObject.get("email"), updateCustomerData.getEmail(), "The email of the user got updated to the new email") ;
-        Assert.assertEquals(jsonObject.get("description"), updateCustomerData.getDescription(), "The description of the user got updated to the new description");
-
+        UpdateCustomerApi.UpdateCustomer(updateCustomerData.getName(), updateCustomerData.getEmail(), updateCustomerData.getDescription(), createdCustomerId)
+                .then()
+                .statusCode(200)
+                .body("id", is(notNullValue()))
+                .body("name", equalTo(updateCustomerData.getName()))
+                .body("description", equalTo(updateCustomerData.getDescription()))
+                .body("email", equalTo(updateCustomerData.getEmail()));
     }
 }

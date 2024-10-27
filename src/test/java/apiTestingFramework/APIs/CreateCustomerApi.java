@@ -42,6 +42,8 @@ public class CreateCustomerApi extends BaseTest {
                 .formParam("name", customer.getName())
                 .formParam("email", customer.getEmail())
                 .formParam("description", customer.getDescription())
+                .log().all()
+                .when()
                 .post(config.getProperty("customerApiEndpoint"));
 
         return response;

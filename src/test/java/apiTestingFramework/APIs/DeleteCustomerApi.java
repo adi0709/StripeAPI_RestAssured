@@ -13,19 +13,14 @@ public class DeleteCustomerApi extends BaseTest {
 
     public static String createdCustomerId;
 
-    public static Response deleteCreatedCustomer(){
-
-        //Creating a customer to be deleted
-        Response createCustomerResponse =
-                CreateCustomerApi.createCustomerFromPojo("Abcd", "RandomEmail@gmail.com", "Adding a random new customer");
-
-        JSONObject jsonObject= new JSONObject(createCustomerResponse.asString());
-        createdCustomerId = (jsonObject.get("id")).toString();
-
+    public static Response deleteCreatedCustomer(String createdCustomerId){
         Response deleteCustomerResponse = given()
                 .auth()
                 .basic(config.getProperty("secretKey"),"")
+                .log().all()
+                .when()
                 .delete(config.getProperty("deleteCustomerApiEndpoint")+"/"+createdCustomerId);
+        deleteCustomerResponse.prettyPrint();
         return deleteCustomerResponse;
     }
 
@@ -33,6 +28,8 @@ public class DeleteCustomerApi extends BaseTest {
         Response deleteCustomerResponse = given()
                 .auth()
                 .basic(config.getProperty("secretKey"),"")
+                .log().all()
+                .when()
                 .delete(config.getProperty("deleteCustomerApiEndpoint")+"/"+data.get("id"));
         return deleteCustomerResponse;
     }

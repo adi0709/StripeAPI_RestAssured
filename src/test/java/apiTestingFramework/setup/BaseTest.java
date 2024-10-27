@@ -1,6 +1,8 @@
 package apiTestingFramework.setup;
 
+import apiTestingFramework.listeners.ExtentListeners;
 import io.restassured.RestAssured;
+import org.testng.TestNG;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 import apiTestingFramework.utilities.ExcelReader;
@@ -34,7 +36,8 @@ public class BaseTest {
     }
 
     @AfterSuite
-    public void tearDown(){
+    public void tearDown() throws IOException {
 
+        fis.close();
     }
 }
